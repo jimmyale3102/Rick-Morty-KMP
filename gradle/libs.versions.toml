@@ -21,6 +21,7 @@ koin-compose-viewmodel = "1.2.0-Beta4"
 ktor = "3.0.1"
 viewmodel = "2.8.0"
 coil = "3.0.0-alpha08"
+pagingComposeCommon = "3.3.0-alpha02-0.4.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -50,12 +51,16 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
-#ViewModel
+# ViewModel
 viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodel" }
 
-#Coil
+# Images
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor", version.ref = "coil" }
+
+# Paging3
+paging-common = { module = "app.cash.paging:paging-commmon", version.ref = "pagingComposeCommon" }
+paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingComposeCommon" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
