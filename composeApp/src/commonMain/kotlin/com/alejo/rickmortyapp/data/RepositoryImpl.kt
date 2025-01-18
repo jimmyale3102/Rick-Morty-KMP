@@ -23,7 +23,7 @@ class RepositoryImpl(
         return api.getCharacterById(id).toDomain()
     }
 
-    override fun getAllCharacters(page: Int): Flow<PagingData<CharacterModel>> {
+    override fun getAllCharacters(): Flow<PagingData<CharacterModel>> {
         return Pager(
             config = PagingConfig(
                 pageSize = MAX_ITEMS,
