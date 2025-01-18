@@ -12,7 +12,8 @@ fun ComponentPreview() {
         CharacterModel(
             id = "1",
             isAlive = true,
-            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            name = "Rick"
         )
     )
 }
