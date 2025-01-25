@@ -15,7 +15,7 @@ class CharactersPagingSource(private val api: ApiService) : PagingSource<Int, Ch
             val page = params.key ?: 1
             val response = api.getAllCharacters(page)
             val characters = response.results
-            val prev = if (page > 0) -1 else null
+            val prev = if (page > 0) page - 1 else null
             val next = if (response.info.next != null) page + 1 else null
             LoadResult.Page(
                 data = characters.map { characterResponse -> characterResponse.toDomain() },
