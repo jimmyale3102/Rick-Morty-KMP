@@ -128,6 +128,7 @@ fun CharacterCard(character: CharacterModel) {
         ) {
             Text(
                 text = character.name,
+                color = Color.White,
                 fontSize = 18.sp,
                 maxLines = 1,
                 minLines = 1
@@ -168,7 +169,7 @@ fun CharacterImage(character: CharacterModel) {
             )
         )
         Text(
-            text = "Jimmy",
+            text = character.name,
             fontSize = 40.sp,
             maxLines = 1,
             minLines = 1,
@@ -180,6 +181,7 @@ fun CharacterImage(character: CharacterModel) {
                 .padding(horizontal = 24.dp, vertical = 16.dp)
                 .vertical()
                 .rotate(-90f)
+                .padding(horizontal = 16.dp)
         )
     }
 }
