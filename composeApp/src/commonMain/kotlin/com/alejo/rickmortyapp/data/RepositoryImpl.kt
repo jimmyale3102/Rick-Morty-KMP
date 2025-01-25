@@ -8,6 +8,7 @@ import com.alejo.rickmortyapp.data.remote.ApiService
 import com.alejo.rickmortyapp.data.remote.paging.CharactersPagingSource
 import com.alejo.rickmortyapp.domain.Repository
 import com.alejo.rickmortyapp.domain.model.CharacterModel
+import com.alejo.rickmortyapp.domain.model.CharacterOfTheDayModel
 import kotlinx.coroutines.flow.Flow
 
 class RepositoryImpl(
@@ -35,7 +36,11 @@ class RepositoryImpl(
         ).flow
     }
 
-    override suspend fun getCharacterOfTheDayDB() {
-        database.getPreferencesDAO().getCharacterOfTheDay()
+    override suspend fun getCharacterOfTheDayDB(): CharacterOfTheDayModel? {
+        return database.getPreferencesDAO().getCharacterOfTheDay()?.toDomain()
+    }
+
+    override suspend fun saveCharacterEntity(characterOfTheDayModel: CharacterOfTheDayModel) {
+        database.getPreferencesDAO().saveCharacterOfTheDay(characterOfTheDayModel.toEntity())
     }
 }
