@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     suspend fun getCharacterById(id: String): CharacterModel
     fun getAllCharacters() : Flow<PagingData<CharacterModel>>
+    fun getAllEpisodes() : Flow<PagingData<EpisodeModel>>
     suspend fun getCharacterOfTheDayDB() : CharacterOfTheDayModel?
     suspend fun saveCharacterEntity(characterOfTheDayModel: CharacterOfTheDayModel)
-    fun getAllEpisodes() : Flow<PagingData<EpisodeModel>>
 }

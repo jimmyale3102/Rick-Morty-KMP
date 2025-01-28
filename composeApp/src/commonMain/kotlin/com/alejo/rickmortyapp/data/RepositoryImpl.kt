@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 class RepositoryImpl(
     private val api: ApiService,
     private val charactersPagingSource: CharactersPagingSource,
+    private val episodesPagingSource: EpisodesPagingSource,
     private val database: RickMortyDatabase
 ) : Repository {
 
@@ -38,21 +39,21 @@ class RepositoryImpl(
         ).flow
     }
 
-    override suspend fun getCharacterOfTheDayDB(): CharacterOfTheDayModel? {
-        return database.getPreferencesDAO().getCharacterOfTheDay()?.toDomain()
-    }
-
-    override suspend fun saveCharacterEntity(characterOfTheDayModel: CharacterOfTheDayModel) {
-        database.getPreferencesDAO().saveCharacterOfTheDay(characterOfTheDayModel.toEntity())
-    }
-
     override fun getAllEpisodes(): Flow<PagingData<EpisodeModel>> {
         return Pager(
             config = PagingConfig(
                 pageSize = MAX_ITEMS,
                 prefetchDistance = PREFETCH_ITEMS
             ),
-            pagingSourceFactory = { EpisodesPagingSource(api) }
+            pagingSourceFactory = { episodesPagingSource }
         ).flow
+    }
+
+    override suspend fun getCharacterOfTheDayDB(): CharacterOfTheDayModel? {
+        return database.getPreferencesDAO().getCharacterOfTheDay()?.toDomain()
+    }
+
+    override suspend fun saveCharacterEntity(characterOfTheDayModel: CharacterOfTheDayModel) {
+        database.getPreferencesDAO().saveCharacterOfTheDay(characterOfTheDayModel.toEntity())
     }
 }
