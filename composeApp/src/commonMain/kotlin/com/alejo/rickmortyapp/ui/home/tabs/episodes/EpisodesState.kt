@@ -5,4 +5,7 @@ import com.alejo.rickmortyapp.domain.model.EpisodeModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-data class EpisodesState(val episodes: Flow<PagingData<EpisodeModel>> = emptyFlow())
+data class EpisodesState(
+    val episodes: Flow<PagingData<EpisodeModel>> = emptyFlow(),
+    val playVideo: String = ""
+)
