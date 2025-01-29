@@ -26,14 +26,14 @@ data class EpisodeResponse(
 
     private fun getVideoURLFromSeason(season: SeasonEpisode): String {
         return when (season) {
-            SEASON_1 -> "https://www.youtube.com/watch?v=8BEzj2kRjO8&ab_channel=RottenTomatoesTV"
-            SEASON_2 -> "https://www.youtube.com/watch?v=SXwf_9xJu5c&ab_channel=Yusuto"
-            SEASON_3 -> "https://www.youtube.com/watch?v=Bmg2vXOQ3kM&ab_channel=SeriesTrailerMP"
-            SEASON_4 -> "https://www.youtube.com/watch?v=bLI2-v264No&ab_channel=RottenTomatoesTV"
-            SEASON_5 -> "https://www.youtube.com/watch?v=yC1UxW8vcDo&ab_channel=RottenTomatoesTV"
-            SEASON_6 -> "https://www.youtube.com/watch?v=jerFRSQW9g8&ab_channel=RottenTomatoesTV"
-            SEASON_7 -> "https://www.youtube.com/watch?v=PkZtVBNkmso&ab_channel=RottenTomatoesTV"
-            else -> "https://www.youtube.com/watch?v=8BEzj2kRjO8&ab_channel=RottenTomatoesTV"
+            SEASON_1 -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
+            SEASON_2 -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
+            SEASON_3 -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
+            SEASON_4 -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
+            SEASON_5 -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
+            SEASON_6 -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
+            SEASON_7 -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
+            else -> "https://phggkrploytfwiajdkot.supabase.co/storage/v1/object/public/RickMortyVideo//se1.mp4"
         }
     }
 
