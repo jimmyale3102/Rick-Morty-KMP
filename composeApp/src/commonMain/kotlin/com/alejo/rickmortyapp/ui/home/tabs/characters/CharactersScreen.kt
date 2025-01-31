@@ -2,6 +2,7 @@ package com.alejo.rickmortyapp.ui.home.tabs.characters
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -41,15 +42,21 @@ import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun CharactersScreen() {
+fun CharactersScreen(navigateToCharacterDetails: (CharacterModel) -> Unit) {
     val viewModel = koinViewModel<CharactersViewModel>()
     val state by viewModel.state.collectAsState()
     val characters = state.characters.collectAsLazyPagingItems()
-    CharacterGridList(characters = characters, state = state)
+    CharacterGridList(characters = characters, state = state) { character ->
+        navigateToCharacterDetails(character)
+    }
 }
 
 @Composable
-fun CharacterGridList(characters: LazyPagingItems<CharacterModel>, state: CharacterState) {
+fun CharacterGridList(
+    characters: LazyPagingItems<CharacterModel>,
+    state: CharacterState,
+    onCharacterSelected: (CharacterModel) -> Unit
+) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
         columns = GridCells.Fixed(2),
@@ -78,7 +85,9 @@ fun CharacterGridList(characters: LazyPagingItems<CharacterModel>, state: Charac
             else -> {
                 items(characters.itemCount) { characterModel ->
                     characters[characterModel]?.let { character ->
-                        CharacterCard(character = character)
+                        CharacterCard(character = character) { character ->
+                            onCharacterSelected(character)
+                        }
                     }
                 }
 
@@ -99,13 +108,14 @@ fun CharacterGridList(characters: LazyPagingItems<CharacterModel>, state: Charac
 }
 
 @Composable
-fun CharacterCard(character: CharacterModel) {
+fun CharacterCard(character: CharacterModel, onCharacterSelected: (CharacterModel) -> Unit) {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(24))
             .border(2.dp, Color.Green, RoundedCornerShape(0, 24, 24, 24))
             .fillMaxWidth()
-            .height(200.dp),
+            .height(200.dp)
+            .clickable { onCharacterSelected(character) },
         contentAlignment = Alignment.BottomCenter
     ) {
         AsyncImage(
