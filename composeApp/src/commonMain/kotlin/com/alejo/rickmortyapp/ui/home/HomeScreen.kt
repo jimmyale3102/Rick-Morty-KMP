@@ -19,7 +19,7 @@ import com.alejo.rickmortyapp.ui.core.navigation.bottomNavigation.BottomBarItem.
 import com.alejo.rickmortyapp.ui.core.navigation.bottomNavigation.BottomNavigationWrapper
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(mainNavController: NavHostController) {
     val items = listOf(Episodes(), Characters())
     val navController = rememberNavController()
 
@@ -27,7 +27,7 @@ fun HomeScreen() {
         bottomBar = { BottomBar(items, navController) }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
-            BottomNavigationWrapper(navController)
+            BottomNavigationWrapper(navController, mainNavController)
         }
     }
 }
