@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,6 +48,16 @@ fun CharacterDetailsScreen(character: CharacterModel) {
 
     Column(Modifier.fillMaxSize().background(White)) {
         MainHeader(character)
+        CharacterInformation(character)
+    }
+}
+
+@Composable
+fun CharacterInformation(character: CharacterModel) {
+    ElevatedCard(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+        Column() {
+
+        }
     }
 }
 
