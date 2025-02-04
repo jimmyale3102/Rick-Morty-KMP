@@ -13,7 +13,8 @@ fun ComponentPreview() {
             id = "1",
             isAlive = true,
             image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-            name = "Rick"
+            name = "Rick",
+            species = "Species"
         )
     )
 }
