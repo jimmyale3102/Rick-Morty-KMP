@@ -56,4 +56,15 @@ class RepositoryImpl(
     override suspend fun saveCharacterEntity(characterOfTheDayModel: CharacterOfTheDayModel) {
         database.getPreferencesDAO().saveCharacterOfTheDay(characterOfTheDayModel.toEntity())
     }
+
+    override suspend fun getCharacterEpisodes(episodes: List<String>): List<EpisodeModel> {
+        if (episodes.isEmpty()) return emptyList()
+
+        if (episodes.size > 1) {
+            return api.getCharacterEpisodes(episodes.joinToString(","))
+                .map { episodeResponse ->  episodeResponse.toDomain() }
+        } else {
+            return listOf(api.getSingleCharacterEpisodes(episodes.first()).toDomain())
+        }
+    }
 }
