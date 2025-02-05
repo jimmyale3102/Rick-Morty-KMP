@@ -9,12 +9,12 @@ import com.alejo.rickmortyapp.ui.home.tabs.characters.CharacterOfTheDay
 @Composable
 fun ComponentPreview() {
     CharacterOfTheDay(
-        CharacterModel(
-            id = "1",
-            isAlive = true,
-            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-            name = "Rick",
-            species = "Species"
-        )
+//        CharacterModel(
+//            id = "1",
+//            isAlive = true,
+//            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+//            name = "Rick",
+//            species = "Species"
+//        )
     )
 }
