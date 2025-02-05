@@ -11,12 +11,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.alejo.rickmortyapp.domain.model.CharacterModel
+import com.alejo.rickmortyapp.domain.model.EpisodeModel
 import com.alejo.rickmortyapp.ui.core.ext.aliveBorder
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -44,11 +49,13 @@ import rickmortyapp.composeapp.generated.resources.space
 @Composable
 fun CharacterDetailsScreen(character: CharacterModel) {
     val viewModel = koinViewModel<CharacterDetailsViewModel> { parameterSetOf(character) }
-    val state = viewModel.uiState.collectAsState()
+    val state by viewModel.uiState.collectAsState()
+    val scrollState = rememberScrollState()
 
-    Column(Modifier.fillMaxSize().background(White)) {
-        MainHeader(character)
-        CharacterInformation(character)
+    Column(Modifier.fillMaxSize().background(White).verticalScroll(scrollState)) {
+        MainHeader(state.character)
+        CharacterInformation(state.character)
+        CharacterEpisodes(state.episodes)
     }
 }
 
@@ -56,9 +63,33 @@ fun CharacterDetailsScreen(character: CharacterModel) {
 fun CharacterInformation(character: CharacterModel) {
     ElevatedCard(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
         Column() {
-
+            Text(character.name)
+            Text(character.gender)
         }
     }
+}
+
+@Composable
+fun CharacterEpisodes(episodes: List<EpisodeModel>?) {
+    ElevatedCard(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+        Box(contentAlignment = Alignment.Center) {
+            if (episodes == null) {
+                CircularProgressIndicator(color = Color.Green)
+            } else {
+                Column(Modifier.fillMaxWidth()) {
+                    episodes.forEach { episode ->
+                        EpisodeItem(episode)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun EpisodeItem(episode: EpisodeModel) {
+    Text(episode.name)
+    Text(episode.episode)
 }
 
 @Composable
