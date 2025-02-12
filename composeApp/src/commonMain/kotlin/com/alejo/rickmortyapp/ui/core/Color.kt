@@ -7,13 +7,13 @@ import androidx.compose.ui.graphics.Color
 val Pink = Color(0xFFFF577D)
 val Green = Color(0xFF5ccf92)
 
-val PrimaryBlack = Color(0xFFFFFFFF)
-val SecondaryBlack = Color(0xFFEAE8EF)
-val TertiaryBlack = Color(0xFFFAFAFA)
+val PrimaryWhite = Color(0xFFFFFFFF)
+val SecondaryWhite = Color(0xFFEAE8EF)
+val TertiaryWhite = Color(0xFFFAFAFA)
 
-val PrimaryWhite = Color(0xFF000000)
-val SecondaryWhite = Color(0xFF302F2F)
-val TertiaryWhite = Color(0xFF464646)
+val PrimaryBlack = Color(0xFF000000)
+val SecondaryBlack = Color(0xFF302F2F)
+val TertiaryBlack = Color(0xFF464646)
 
 val BackgroundPrimaryColor
     @Composable
@@ -27,3 +27,6 @@ val BackgroundTertiaryColor
 val DefaultTextColor
     @Composable
     get() = if(isSystemInDarkTheme()) Color.White else Color.Black
+val PlaceholderColor
+    @Composable
+    get() = if(isSystemInDarkTheme()) TertiaryBlack else SecondaryWhite
