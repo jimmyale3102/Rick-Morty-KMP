@@ -5,14 +5,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -27,15 +25,20 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import com.alejo.rickmortyapp.domain.model.CharacterModel
+import com.alejo.rickmortyapp.ui.core.BackgroundPrimaryColor
+import com.alejo.rickmortyapp.ui.core.DefaultTextColor
+import com.alejo.rickmortyapp.ui.core.Green
+import com.alejo.rickmortyapp.ui.core.composables.PagingType
+import com.alejo.rickmortyapp.ui.core.composables.PagingWrapper
 import com.alejo.rickmortyapp.ui.core.ext.vertical
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -57,52 +60,45 @@ fun CharacterGridList(
     state: CharacterState,
     onCharacterSelected: (CharacterModel) -> Unit
 ) {
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        item(span = { GridItemSpan(2) }) {
-            CharacterOfTheDay(character = state.characterOfTheDay)
+    PagingWrapper(
+        modifier = Modifier.fillMaxSize()
+            .background(BackgroundPrimaryColor)
+            .padding(horizontal = 16.dp),
+        pagingType = PagingType.VERTICAL_GRID,
+        pagingItems = characters,
+        emptyView = {
+            Text(text = "No characters found")
+        },
+        initView = {
+            Box(contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        },
+        loadingItemsView = {
+            Box(
+                modifier = Modifier.fillMaxWidth().height(100.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        },
+        contentHeader = {
+            Column(
+                Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "Characters",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 24.sp,
+                    color = DefaultTextColor
+                )
+                CharacterOfTheDay(character = state.characterOfTheDay)
+            }
         }
-
-        when {
-            characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
-                item(span = { GridItemSpan(2) }) {
-                    Box(contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
-                }
-            }
-
-            characters.loadState.refresh is LoadState.NotLoading && characters.itemCount == 0 -> {
-                item(span = { GridItemSpan(2) }) {
-                    Text(text = "No characters found")
-                }
-            }
-
-            else -> {
-                items(characters.itemCount) { characterModel ->
-                    characters[characterModel]?.let { character ->
-                        CharacterCard(character = character) { character ->
-                            onCharacterSelected(character)
-                        }
-                    }
-                }
-
-                if (characters.loadState.append is LoadState.Loading) {
-                    item {
-                        Box(
-                            modifier = Modifier.fillMaxWidth().height(100.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
-                }
-            }
-
+    ) { character ->
+        CharacterCard(character = character) { characterModel ->
+            onCharacterSelected(characterModel)
         }
     }
 }
@@ -112,7 +108,7 @@ fun CharacterCard(character: CharacterModel, onCharacterSelected: (CharacterMode
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(24))
-            .border(2.dp, Color.Green, RoundedCornerShape(0, 24, 24, 24))
+            .border(2.dp, Green, RoundedCornerShape(0, 24, 24, 24))
             .fillMaxWidth()
             .height(200.dp)
             .clickable { onCharacterSelected(character) },
@@ -163,7 +159,7 @@ fun CharacterOfTheDay(character: CharacterModel? = null) {
 @Composable
 fun CharacterImage(character: CharacterModel) {
     Box(contentAlignment = Alignment.BottomStart) {
-        Box(Modifier.fillMaxSize().background(Color.Green.copy(alpha = 0.3f)))
+        Box(Modifier.fillMaxSize().background(Green.copy(alpha = 0.3f)))
         AsyncImage(
             model = character.image,
             contentDescription = "Character of the day",
