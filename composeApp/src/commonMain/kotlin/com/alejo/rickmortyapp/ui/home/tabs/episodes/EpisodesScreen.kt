@@ -1,11 +1,11 @@
 package com.alejo.rickmortyapp.ui.home.tabs.episodes
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.alejo.rickmortyapp.domain.model.EpisodeModel
@@ -45,8 +46,6 @@ import com.alejo.rickmortyapp.domain.model.SeasonEpisode.SEASON_6
 import com.alejo.rickmortyapp.domain.model.SeasonEpisode.SEASON_7
 import com.alejo.rickmortyapp.domain.model.SeasonEpisode.UNKNOWN
 import com.alejo.rickmortyapp.ui.core.BackgroundPrimaryColor
-import com.alejo.rickmortyapp.ui.core.BackgroundSecondaryColor
-import com.alejo.rickmortyapp.ui.core.BackgroundTertiaryColor
 import com.alejo.rickmortyapp.ui.core.DefaultTextColor
 import com.alejo.rickmortyapp.ui.core.PlaceholderColor
 import com.alejo.rickmortyapp.ui.core.composables.PagingType
@@ -116,9 +115,9 @@ fun VideoPlaceholder() {
             )
             Text(
                 text = "Aw, jeez, you gotta click the vide, guys! I mean, it might be important or something!",
+                textAlign = TextAlign.Center,
                 color = DefaultTextColor,
-                fontStyle = FontStyle.Italic,
-                modifier = Modifier.padding(16.dp)
+                fontStyle = FontStyle.Italic
             )
         }
     }
@@ -154,24 +153,21 @@ private fun VideoComponent(videoUrl: String, onVideoClosed: () -> Unit) {
 
 @Composable
 fun EpisodeItem(episode: EpisodeModel, onEpisodeSelected: (String) -> Unit) {
-    Box(
+    Column(
         modifier = Modifier
             .width(180.dp)
             .padding(horizontal = 4.dp)
             .clickable { onEpisodeSelected(episode.videoURL) }
             .clip(RoundedCornerShape(8)),
-        contentAlignment = Alignment.Center
+        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-        Column {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(getSeasonImage(episode.season)),
-                contentDescription = episode.name,
-                contentScale = ContentScale.Crop
-            )
-            Spacer(Modifier.height(2.dp))
-            Text(text = episode.episode, color = DefaultTextColor, fontWeight = FontWeight.Bold)
-        }
+        Image(
+            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8)),
+            painter = painterResource(getSeasonImage(episode.season)),
+            contentDescription = episode.name,
+            contentScale = ContentScale.Crop
+        )
+        Text(text = episode.episode, color = DefaultTextColor, fontWeight = FontWeight.Bold)
     }
 }
 
