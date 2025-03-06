@@ -26,6 +26,7 @@ kotlinxDatetime = "0.6.1"
 roomCommon = "2.7.0-alpha07"
 ksp = "2.0.21-1.0.27"
 androidxSqliteBundled = "2.5.0-alpha07"
+splashScreen = "1.0.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -73,6 +74,9 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomCommon" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCommon" }
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "androidxSqliteBundled" }
+
+#Splash
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
