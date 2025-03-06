@@ -1,11 +1,12 @@
 package com.alejo.rickmortyapp.ui.core.navigation.bottomNavigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import com.alejo.rickmortyapp.ui.core.navigation.Routes
+import org.jetbrains.compose.resources.painterResource
+import rickmortyapp.composeapp.generated.resources.Res
+import rickmortyapp.composeapp.generated.resources.ic_characters
+import rickmortyapp.composeapp.generated.resources.ic_episodes
 
 sealed class BottomBarItem {
     abstract val route: String
@@ -16,7 +17,7 @@ sealed class BottomBarItem {
         override val route: String = Routes.Episodes.route,
         override val title: String = "Episodes",
         override val icon: @Composable () -> Unit = {
-            Icon(Icons.Default.Home, contentDescription = title)
+            Icon(painter = painterResource(Res.drawable.ic_episodes), contentDescription = title)
         }
     ) : BottomBarItem()
 
@@ -24,7 +25,7 @@ sealed class BottomBarItem {
         override val route: String = Routes.Characters.route,
         override val title: String = "Characters",
         override val icon: @Composable () -> Unit = {
-            Icon(Icons.Default.Person, contentDescription = title)
+            Icon(painter = painterResource(Res.drawable.ic_characters), contentDescription = title)
         }
     ) : BottomBarItem()
 }
